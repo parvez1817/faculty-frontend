@@ -29,7 +29,7 @@ const Dashboard = () => {
     // Fetch from backend API
     Promise.all([
       fetch(`${API_URL}/api/pending`).then(res => res.json()),
-      fetch(`${API_URL}/api/acchistoryid`).then(res => res.json()),
+      fetch(`${API_URL}/api/acchistoryids`).then(res => res.json()),
       fetch(`${API_URL}/api/rejhistoryids`).then(res => res.json())
     ])
     .then(([pendingData, approvedData, rejectedData]) => {
