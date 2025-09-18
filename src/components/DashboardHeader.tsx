@@ -41,7 +41,7 @@ const DashboardHeader = ({
                   {teacherName.split(' ').map(n => n[0]).join('').toUpperCase()}
                 </AvatarFallback>
               </Avatar>
-              <span className="font-medium">Welcome, {teacherName}</span>
+              <span className="font-medium">Welcome, DR.{teacherName}</span>
             </div>
             
             <Button
