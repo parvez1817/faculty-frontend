@@ -21,6 +21,13 @@ const Dashboard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const teacherRegister = localStorage.getItem('teacherRegister');
+    if (!teacherRegister) {
+      navigate('/');
+    }
+  }, [navigate]);
+
+  useEffect(() => {
     const storedName = localStorage.getItem('teacherName');
     setTeacherName(storedName || '');
   }, []);
@@ -86,6 +93,8 @@ const Dashboard = () => {
   };
 
   const handleLogout = () => {
+    localStorage.removeItem('teacherName');
+    localStorage.removeItem('teacherRegister');
     toast({
       title: "Logged Out",
       description: "You have been successfully logged out.",
