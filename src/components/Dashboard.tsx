@@ -22,7 +22,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     if (!localStorage.getItem('teacherRegister')) {
-      navigate('/login');
+      navigate('/');
     }
   }, [navigate]);
 
@@ -99,7 +99,7 @@ const Dashboard = () => {
       description: "You have been successfully logged out.",
     });
     setIsFadingOut(true);
-    setTimeout(() => navigate('/login'), 1200);
+    setTimeout(() => navigate('/'), 1200);
   };
 
   return (
