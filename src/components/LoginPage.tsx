@@ -54,7 +54,7 @@ const LoginPage = () => {
         description: `Welcome, ${name}!`,
       });
 
-      navigate('/dashboard');
+      navigate('/');
     } catch (error) {
       console.error('Error checking faculty ID:', error);
       toast({

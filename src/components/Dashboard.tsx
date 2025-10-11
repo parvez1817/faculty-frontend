@@ -21,6 +21,12 @@ const Dashboard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (!localStorage.getItem('teacherRegister')) {
+      navigate('/login');
+    }
+  }, [navigate]);
+
+  useEffect(() => {
     const storedName = localStorage.getItem('teacherName');
     setTeacherName(storedName || '');
   }, []);
@@ -86,12 +92,14 @@ const Dashboard = () => {
   };
 
   const handleLogout = () => {
+    localStorage.removeItem('teacherName');
+    localStorage.removeItem('teacherRegister');
     toast({
       title: "Logged Out",
       description: "You have been successfully logged out.",
     });
     setIsFadingOut(true);
-    setTimeout(() => navigate('/'), 1200);
+    setTimeout(() => navigate('/login'), 1200);
   };
 
   return (
