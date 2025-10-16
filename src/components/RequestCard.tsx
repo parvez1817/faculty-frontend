@@ -6,6 +6,27 @@ import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 
+// Format date as "DD-MM-YY | hh:mm AM/PM"
+const formatDateTime = (isoString?: string) => {
+  if (!isoString) return '';
+  const d = new Date(isoString);
+  if (isNaN(d.getTime())) return '';
+  
+  const day = String(d.getDate()).padStart(2, '0');
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const year = String(d.getFullYear()).slice(-2); // last 2 digits of year
+  
+  let hours = d.getHours();
+  const minutes = String(d.getMinutes()).padStart(2, '0');
+  const ampm = hours >= 12 ? 'PM' : 'AM';
+  hours = hours % 12;
+  if (hours === 0) hours = 12;
+  const hh = String(hours).padStart(2, '0');
+  
+  return `${day}-${month}-${year} | ${hh}:${minutes} ${ampm}`;
+};
+
+
 export interface StudentRequest {
   _id: string;
   registerNumber: string;
@@ -90,7 +111,7 @@ const RequestCard = ({ request, onApprove, onReject, isProcessing = false }: Req
                 {/* Date row: full width, below Library Code/Reason */}
                 {(request.status === 'approved' || request.status === 'rejected') && request.createdAt && (
                   <div className="sm:col-span-2">
-                    <strong>{request.status === 'approved' ? 'Approved On' : 'Rejected On'}:</strong> {new Date(request.createdAt).toLocaleString()}
+                    <strong>{request.status === 'approved' ? 'Approved On' : 'Rejected On'}:</strong> {formatDateTime(request.createdAt)}
                   </div>
                 )}
               </div>
