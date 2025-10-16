@@ -18,6 +18,8 @@ export interface StudentRequest {
   reason: string;
   status: 'pending' | 'approved' | 'rejected';
   photoUrl: string;
+  // Optional timestamp coming from backend (e.g., from acchistoryids collection)
+  createdAt?: string;
 }
 
 interface RequestCardProps {
@@ -80,8 +82,17 @@ const RequestCard = ({ request, onApprove, onReject, isProcessing = false }: Req
                 <div><strong>Department:</strong> {request.department}</div>
                 <div><strong>Year:</strong> {request.year}</div>
                 <div><strong>Section:</strong> {request.section}</div>
+                {/* Next row: Library Code (left) and Reason (right for approved/rejected) */}
                 <div><strong>Library Code:</strong> {request.libraryCode}</div>
-                <div className="sm:col-span-2"><strong>Reason:</strong> {request.reason}</div>
+                <div className={`${(request.status === 'approved' || request.status === 'rejected') ? '' : 'sm:col-span-2'}`}>
+                  <strong>Reason:</strong> {request.reason}
+                </div>
+                {/* Date row: full width, below Library Code/Reason */}
+                {(request.status === 'approved' || request.status === 'rejected') && request.createdAt && (
+                  <div className="sm:col-span-2">
+                    <strong>{request.status === 'approved' ? 'Approved On' : 'Rejected On'}:</strong> {new Date(request.createdAt).toLocaleString()}
+                  </div>
+                )}
               </div>
             </div>
           </div>

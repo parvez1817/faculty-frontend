@@ -51,7 +51,10 @@ const Dashboard = () => {
 
   const filteredRequests = useMemo(() => {
     return requests.filter(request => {
-      const matchesSearch = (request.name || '').toLowerCase().includes(searchTerm.toLowerCase());
+      const term = (searchTerm || '').trim().toLowerCase();
+      const name = (request.name || '').toLowerCase();
+      const reg = (request.registerNumber || '').toLowerCase();
+      const matchesSearch = term === '' || name.includes(term) || reg.includes(term);
       const matchesStatus = statusFilter === 'all' || ((request.status || '').toLowerCase() === statusFilter);
       return matchesSearch && matchesStatus;
     });
@@ -119,7 +122,7 @@ const Dashboard = () => {
             <div className="flex-1 relative min-w-0 w-full sm:w-auto">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
               <Input
-                placeholder="Search by name..."
+                placeholder="Search by name or register number..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="pl-10 bg-white/70 border-white/30 focus:bg-white text-sm h-10 sm:h-12 w-full"
